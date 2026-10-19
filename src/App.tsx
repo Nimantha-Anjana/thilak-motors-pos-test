@@ -27,7 +27,7 @@ function Splash() {
 }
 
 function Shell() {
-  const { user, loading } = useAuth();
+  const { user, loading, recovering } = useAuth();
   const [page, setPage] = useState<Page>('dashboard');
   const [lowStockCount, setLowStockCount] = useState(0);
 
@@ -44,7 +44,7 @@ function Shell() {
   }, [user, page, refreshLowStock]);
 
   if (loading) return <Splash />;
-  if (!user) return <AuthScreen />;
+  if (!user || recovering) return <AuthScreen />;
 
   return (
     <AppLayout page={page} onPageChange={setPage} lowStockCount={lowStockCount}>
